@@ -1,0 +1,10 @@
+# github.com/cespare/xxhash/v2 v2.1.2
+github.com/cespare/xxhash/v2
+# github.com/pkg/errors v0.9.1
+github.com/pkg/errors
+# github.com/prometheus/common v0.31.1
+## explicit
+github.com/prometheus/common/model
+# github.com/prometheus/prometheus v1.8.2-0.20211006110246-b878527151e6
+## explicit
+github.com/prometheus/prometheus/pkg/labels
