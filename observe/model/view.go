@@ -1,6 +1,10 @@
 package model
 
-import resModel "github.com/observeproject/common/resource/model"
+import (
+	resModel "github.com/observeproject/common/resource/model"
+	promModel "github.com/prometheus/common/model"
+	"github.com/prometheus/prometheus/pkg/labels"
+)
 
 // View Service view is made up with a set of resources, and is used for all observe operations.
 type View struct {
@@ -20,20 +24,41 @@ type ViewStyles struct {
 
 type ViewStyleInf interface {
 	Enabled() bool
-	Context() ViewContext
 }
-
-type ViewContext interface {
-}
-
 type ViewStyle struct {
 	Enabled bool
 }
 
+type ResourceMatcherTemplateInf interface {
+	Rendering(res resModel.Resource) *resModel.ResourceMatcher
+}
+type ResourceMatcherTemplate struct {
+	ParamType resModel.SchemaName
+	Type      resModel.SchemaName
+	Matchers  []*MatcherTemplate
+}
+
+func (t *ResourceMatcherTemplate) Rendering(res resModel.Resource) *resModel.ResourceMatcher {
+	matchers := make([]*labels.Matcher, 0)
+	// TODO:
+
+	return &resModel.ResourceMatcher{
+		Type:     t.Type,
+		Matchers: matchers,
+	}
+}
+
+type MatcherTemplate struct {
+	ParamType resModel.SchemaName
+	Type      labels.MatchType
+	Name      promModel.LabelName
+	Template  string
+}
+
 type TreeViewItem struct {
-	// TODO：
-	Input   resModel.SchemaName
-	Content resModel.RelationName
+	InputParam         resModel.SchemaName      // Parent node Resource Type
+	Relation           resModel.RelationName    // Relation between current type and parent type, used to determain parent node.
+	AdditionalMatchers resModel.ResourceMatcher // Additional Matchers used for filter
 }
 
 type TreeViewStyle struct {
@@ -42,7 +67,11 @@ type TreeViewStyle struct {
 }
 
 type ViewStage struct {
-	// TODO：
+	Name promModel.LabelName
+
+	InputParam resModel.SchemaName // Parent node Resource Type
+	Resources  map[resModel.SchemaName]*resModel.ResourceMatcher
+	Relations  []*resModel.RelationName
 }
 
 type StageViewStyle struct {

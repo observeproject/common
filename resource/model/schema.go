@@ -23,5 +23,10 @@ type RelationSchema struct {
 	Name           promModel.LabelName
 	Brief          string
 	Source, Target ResourceSchema
-	Condition      string // ?
+	Conditions     []*RelationConditionSchema
+}
+
+type RelationConditionSchema struct {
+	SourceAttribute promModel.LabelName
+	TargetAttribute promModel.LabelName
 }

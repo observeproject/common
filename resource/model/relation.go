@@ -36,8 +36,8 @@ type RelationQueryRangeResponse struct {
 }
 
 type RelationChangedRecord struct {
-	Since promModel.Time // The time of state value change to.
-	Value StateValue     // The value of the state, must be match StateValue.
+	Since promModel.Time // The time of relation created.
+	Endup promModel.Time // The time of relation finished.
 }
 
 // Relation is the data represent dependency of resources
