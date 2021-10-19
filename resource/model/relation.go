@@ -4,35 +4,9 @@ import (
 	promModel "github.com/prometheus/common/model"
 )
 
-type RelationMatcher struct {
-	Name          promModel.LabelName
-	SourceMatcher ResourceMatcher
-	TargetMatcher ResourceMatcher
-}
-
 type RelationName struct {
 	Name           promModel.LabelName
 	Source, Target SchemaName
-}
-
-// RelationQuery is the instant query Params
-type RelationQuery struct {
-	Time      promModel.Time
-	Selectors []*RelationMatcher
-}
-
-type RelationQueryResponse struct {
-	Content map[RelationName][]Relation
-}
-
-type RelationQueryRange struct {
-	Start     promModel.Time
-	End       promModel.Time
-	Selectors []*RelationMatcher
-}
-
-type RelationQueryRangeResponse struct {
-	Content map[SchemaName][]HistoricalRelation
 }
 
 type RelationChangedRecord struct {

@@ -28,7 +28,8 @@ type ResourceMatcher struct {
 }
 
 type ResourceQueryResponse struct {
-	Content map[SchemaName][]Resource
+	Resources map[SchemaName][]Resource
+	Relations map[RelationName][]Relation
 }
 
 type ResourceQueryRange struct {
@@ -38,9 +39,9 @@ type ResourceQueryRange struct {
 }
 
 type ResourceQueryRangeResponse struct {
-	Content map[SchemaName][]HistoricalResource
+	Resources map[SchemaName][]HistoricalResource
+	Relations map[RelationName][]HistoricalRelation
 }
-
 // Request & Response Section End
 
 // Resource Model Section Begin
@@ -60,7 +61,7 @@ type HistoricalResource struct {
 	SecondaryTypes []SchemaName // Additional type of resource, used for observability.
 
 	Attributes []*HistoricalAttribute // Attributes of the resource, may be a required or optional.
-	States     []*HistoricalState     // State of the resource, name should be unique.
+	State      *HistoricalState       // State of the resource, name should be unique.
 }
 
 // Attribute is a Key-value struct for describe a property of the resource, and can be used for resources selection.
@@ -79,31 +80,4 @@ type StringRecord struct {
 	Since promModel.Time       // The time of the value change to.
 	Value promModel.LabelValue // The value, cannot be null or empty.
 }
-
-type StateValue int
-
-const (
-	NORMAL StateValue = iota << 2
-	INFO
-	WARN
-	ERROR
-	CRITICAL
-)
-
-// State is a Key-value struct for describe a status of the resource in some aspect. The value is enum value.
-type State struct {
-	Name        promModel.LabelName // The name of the state, must be unique in the resource level and cannot be null or empty.
-	StateRecord `json:",inline" yaml:",inline"`
-}
-
-type StateRecord struct {
-	Since promModel.Time // The time of state value change to.
-	Value StateValue     // The value of the state, must be match StateValue.
-}
-
-type HistoricalState struct {
-	Name    promModel.LabelName
-	Records []*StateRecord
-}
-
 // Resource Model Section End
