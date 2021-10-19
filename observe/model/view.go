@@ -57,7 +57,7 @@ type MatcherTemplate struct {
 
 type TreeViewItem struct {
 	InputParam         resModel.SchemaName      // Parent node Resource Type
-	Relation           resModel.RelationName    // Relation between current type and parent type, used to determain parent node.
+	Relation           resModel.RelationName    // Relation between current type and parent type, used to determine parent node.
 	AdditionalMatchers resModel.ResourceMatcher // Additional Matchers used for filter
 }
 

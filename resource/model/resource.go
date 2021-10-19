@@ -14,8 +14,12 @@ type ResourceQuery struct {
 }
 
 type ResourceSelector struct {
-	ResourceMatcher
-	ShowStates []*promModel.LabelName
+	// Matcher Start point of resource searching, required.
+	Matcher ResourceMatcher
+	// ShowState return the resource with global state.
+	ShowState bool
+	// Relations return more resources that match the relation of Matcher, optional.
+	Relations []*RelationName
 }
 
 type ResourceMatcher struct {
@@ -47,7 +51,7 @@ type Resource struct {
 	Urn            string       // The Unique resource name of this resources, must be unique with whole scope.
 	SecondaryTypes []SchemaName // Additional type of resource, used for observability.
 	Attributes     []*Attribute // Attributes of the resource, may be a required or optional.
-	States         []*State     // State of the resource, name should be unique.
+	States         *State       // State of the resource, name should be unique.
 }
 
 type HistoricalResource struct {
