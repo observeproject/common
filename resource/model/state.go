@@ -2,6 +2,7 @@ package model
 
 import (
 	promModel "github.com/prometheus/common/model"
+	"github.com/prometheus/prometheus/pkg/labels"
 )
 
 type StateValue int
@@ -13,6 +14,40 @@ const (
 	ERROR
 	CRITICAL
 )
+
+// Request & Response Section Begin
+
+// StateQuery is the instant query Params
+type StateQuery struct {
+	Time      promModel.Time
+	Selectors []*StateSelector
+}
+
+type StateSelector struct {
+	// Matcher Start point of resource searching, required.
+	Matcher ResourceMatcher
+
+	// States selector of stateName
+	States labels.Matcher
+}
+
+type StateQueryResponse struct {
+	Content map[string][]*State
+}
+
+type StateQueryRange struct {
+	Start   promModel.Time
+	End     promModel.Time
+	Matcher ResourceMatcher
+
+	// States selector of stateName
+	States labels.Matcher
+}
+
+type StateQueryRangeResponse struct {
+	Content map[string][]*HistoricalState
+}
+// Request & Response Section End
 
 // State is a Key-value struct for describe a status of the resource in some aspect. The value is enum value.
 type State struct {

@@ -16,6 +16,7 @@ type View struct {
 	Styles    ViewStyles
 }
 
+// ViewStyles defines the different show style for view
 type ViewStyles struct {
 	PlainView PlainViewStyle
 	TreeView  TreeViewStyle
@@ -29,36 +30,9 @@ type ViewStyle struct {
 	Enabled bool
 }
 
-type ResourceMatcherTemplateInf interface {
-	Rendering(res resModel.Resource) *resModel.ResourceMatcher
-}
-type ResourceMatcherTemplate struct {
-	ParamType resModel.SchemaName
-	Type      resModel.SchemaName
-	Matchers  []*MatcherTemplate
-}
-
-func (t *ResourceMatcherTemplate) Rendering(res resModel.Resource) *resModel.ResourceMatcher {
-	matchers := make([]*labels.Matcher, 0)
-	// TODO:
-
-	return &resModel.ResourceMatcher{
-		Type:     t.Type,
-		Matchers: matchers,
-	}
-}
-
-type MatcherTemplate struct {
-	ParamType resModel.SchemaName
-	Type      labels.MatchType
-	Name      promModel.LabelName
-	Template  string
-}
-
 type TreeViewItem struct {
-	InputParam         resModel.SchemaName      // Parent node Resource Type
-	Relation           resModel.RelationName    // Relation between current type and parent type, used to determine parent node.
-	AdditionalMatchers resModel.ResourceMatcher // Additional Matchers used for filter
+	ParentType resModel.SchemaName       // ParentType is the SchemaName of parent node, optional.
+	Current    ViewSliceResourceSelector // Current resource matcher wrapper for view use
 }
 
 type TreeViewStyle struct {
@@ -67,11 +41,18 @@ type TreeViewStyle struct {
 }
 
 type ViewStage struct {
-	Name promModel.LabelName
+	StageName promModel.LabelName // StageName is unique in the view.
 
-	InputParam resModel.SchemaName // Parent node Resource Type
-	Resources  map[resModel.SchemaName]*resModel.ResourceMatcher
-	Relations  []*resModel.RelationName
+	FromType  resModel.SchemaName          // FromType SchemaName which is entrance of current stage, required.
+	Current   []*ViewSliceResourceSelector // Current resource matcher wrapper for view use.
+	Relations []*resModel.RelationName     // Relations Searching with relations from current resources.
+}
+
+// ViewSliceResourceSelector used for resource query or relation query purpose.
+type ViewSliceResourceSelector struct {
+	Type         resModel.SchemaName // Type is the SchemaName of current Node(s), required
+	RelationName promModel.LabelName // RelationName combines with Type and additional Params type to be a relation.
+	Matchers     []*labels.Matcher   // Matchers is the resource selector for filtering.
 }
 
 type StageViewStyle struct {
