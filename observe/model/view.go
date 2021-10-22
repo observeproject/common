@@ -30,29 +30,29 @@ type ViewStyle struct {
 	Enabled bool
 }
 
-type TreeViewItem struct {
-	ParentType resModel.SchemaName       // ParentType is the SchemaName of parent node, optional.
-	Current    ViewSliceResourceSelector // Current resource matcher wrapper for view use
-}
+// type TreeViewItem struct {
+// 	SourceType resModel.SchemaName       // SourceType is the SchemaName of parent node, optional.
+// 	Current    ViewSliceResourceSelector // Current resource matcher wrapper for view use
+// }
 
-type TreeViewStyle struct {
-	ViewStyle
-	Items []*TreeViewItem
-}
+// type TreeViewStyle struct {
+// 	ViewStyle
+// 	Items []*TreeViewItem
+// }
 
 type ViewStage struct {
 	StageName promModel.LabelName // StageName is unique in the view.
 
-	FromType  resModel.SchemaName          // FromType SchemaName which is entrance of current stage, required.
-	Current   []*ViewSliceResourceSelector // Current resource matcher wrapper for view use.
-	Relations []*resModel.RelationName     // Relations Searching with relations from current resources.
+	SourceType resModel.SchemaName          // FromType SchemaName which is entrance of current stage, required.
+	Current    []*ViewSliceResourceSelector // Current resource matcher wrapper for view use.
+	Relations  []*resModel.RelationName     // Relations Searching with relations from current resources.
 }
 
 // ViewSliceResourceSelector used for resource query or relation query purpose.
 type ViewSliceResourceSelector struct {
-	Type         resModel.SchemaName // Type is the SchemaName of current Node(s), required
-	RelationName promModel.LabelName // RelationName combines with Type and additional Params type to be a relation.
-	Matchers     []*labels.Matcher   // Matchers is the resource selector for filtering.
+	TargetType   resModel.SchemaName     // TargetType is the SchemaName of current Node(s), required
+	RelationName []resModel.RelationName // RelationName combines with Type and additional Params type to be a relation.
+	Matchers     []*labels.Matcher       // Matchers is the resource selector for filtering.
 }
 
 type StageViewStyle struct {
@@ -62,4 +62,15 @@ type StageViewStyle struct {
 
 type PlainViewStyle struct {
 	ViewStyle
+}
+
+type TreeViewStyle struct {
+	ViewStyle
+	Items []*TreeViewItem
+}
+
+type TreeViewItem struct {
+	Matcher   resModel.ResourceMatcher
+	Relations []*resModel.RelationName
+	Children  []*TreeViewItem
 }

@@ -14,8 +14,10 @@ type ResourceQuery struct {
 }
 
 type ResourceSelector struct {
-	// Matcher Start point of resource searching, required.
-	Matcher ResourceMatcher
+	// SourceMatcher Start point of resource searching, required.
+	SourceMatcher ResourceMatcher
+	// TargetMatcher Endpoint of resource searching, required.
+	TargetMatcher ResourceMatcher
 	// ShowState return the resource with global state.
 	ShowState bool
 	// Relations return more resources that match the relation of Matcher, optional.
@@ -42,6 +44,7 @@ type ResourceQueryRangeResponse struct {
 	Resources map[SchemaName][]HistoricalResource
 	Relations map[RelationName][]HistoricalRelation
 }
+
 // Request & Response Section End
 
 // Resource Model Section Begin
@@ -80,4 +83,5 @@ type StringRecord struct {
 	Since promModel.Time       // The time of the value change to.
 	Value promModel.LabelValue // The value, cannot be null or empty.
 }
+
 // Resource Model Section End
