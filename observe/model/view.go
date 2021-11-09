@@ -11,9 +11,9 @@ type View struct {
 	Name      string
 	Alias     string
 	Scene     string
-	Resources map[resModel.SchemaName]*resModel.ResourceMatcher
-	Relations []*resModel.RelationName
-	Styles    ViewStyles
+	Resources []*resModel.ResourceMatcher `json:",omitempty"`
+	Relations []*resModel.RelationName    `json:",omitempty"`
+	Styles    *ViewStyles                 `json:",omitempty"`
 }
 
 // ViewStyles defines the different show style for view
