@@ -15,23 +15,23 @@ type ResourceQuery struct {
 
 type ResourceSelector struct {
 	// SourceMatcher Start point of resource searching, required.
-	SourceMatcher ResourceMatcher
+	SourceMatcher ResourceMatcher `json:",omitempty" yaml:",omitempty"`
 	// TargetMatcher Endpoint of resource searching, required.
-	TargetMatcher ResourceMatcher
+	TargetMatcher ResourceMatcher `json:",omitempty" yaml:",omitempty"`
 	// ShowState return the resource with global state.
 	ShowState bool
 	// Relations return more resources that match the relation of Matcher, optional.
-	Relations []*RelationName
+	Relations []*RelationName `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceMatcher struct {
 	Type     SchemaName
-	Matchers []*labels.Matcher
+	Matchers []*labels.Matcher `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceQueryResponse struct {
-	Resources map[SchemaName][]Resource
-	Relations map[RelationName][]Relation
+	Resources map[SchemaName][]Resource `json:",omitempty" yaml:",omitempty"`
+	Relations map[SchemaName][]Relation `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceQueryRange struct {
@@ -41,8 +41,8 @@ type ResourceQueryRange struct {
 }
 
 type ResourceQueryRangeResponse struct {
-	Resources map[SchemaName][]HistoricalResource
-	Relations map[RelationName][]HistoricalRelation
+	Resources map[SchemaName][]HistoricalResource `json:",omitempty" yaml:",omitempty"`
+	Relations map[SchemaName][]HistoricalRelation `json:",omitempty" yaml:",omitempty"`
 }
 
 // Request & Response Section End
@@ -81,6 +81,7 @@ type HistoricalAttribute struct {
 
 type StringRecord struct {
 	Since promModel.Time       // The time of the value change to.
+	EndUp promModel.Time       // The time of relation finished.
 	Value promModel.LabelValue // The value, cannot be null or empty.
 }
 

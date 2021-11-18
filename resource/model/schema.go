@@ -13,9 +13,9 @@ type ResourceSchema struct {
 }
 
 type AttributeSchema struct {
-	Name     promModel.LabelName
-	Brief    string
-	Type     string
+	Name     promModel.LabelName // id
+	Brief    string              // comment
+	Type     string              // string,int...
 	Required bool
 }
 

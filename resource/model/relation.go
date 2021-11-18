@@ -1,6 +1,8 @@
 package model
 
 import (
+	"fmt"
+
 	promModel "github.com/prometheus/common/model"
 )
 
@@ -9,9 +11,13 @@ type RelationName struct {
 	Source, Target SchemaName
 }
 
+func (r RelationName) String() string {
+	return fmt.Sprintf("%s_%s_%s", r.Source, r.Name, r.Target)
+}
+
 type RelationChangedRecord struct {
 	Since promModel.Time // The time of relation created.
-	Endup promModel.Time // The time of relation finished.
+	EndUp promModel.Time // The time of relation finished.
 }
 
 // Relation is the data represent dependency of resources
