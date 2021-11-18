@@ -43,14 +43,14 @@ type ViewStyle struct {
 type ViewStage struct {
 	StageName promModel.LabelName // StageName is unique in the view.
 
-	SourceType resModel.SchemaName          // FromType SchemaName which is entrance of current stage, required.
+	SourceType resModel.TypeName            // FromType SchemaName which is entrance of current stage, required.
 	Current    []*ViewSliceResourceSelector // Current resource matcher wrapper for view use.
 	Relations  []*resModel.RelationName     // Relations Searching with relations from current resources.
 }
 
 // ViewSliceResourceSelector used for resource query or relation query purpose.
 type ViewSliceResourceSelector struct {
-	TargetType   resModel.SchemaName     // TargetType is the SchemaName of current Node(s), required
+	TargetType   resModel.TypeName       // TargetType is the SchemaName of current Node(s), required
 	RelationName []resModel.RelationName // RelationName combines with Type and additional Params type to be a relation.
 	Matchers     []*labels.Matcher       // Matchers is the resource selector for filtering.
 }

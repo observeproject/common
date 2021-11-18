@@ -25,13 +25,13 @@ type ResourceSelector struct {
 }
 
 type ResourceMatcher struct {
-	Type     SchemaName
+	Type     TypeName
 	Matchers []*labels.Matcher `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceQueryResponse struct {
-	Resources map[SchemaName][]Resource `json:",omitempty" yaml:",omitempty"`
-	Relations map[SchemaName][]Relation `json:",omitempty" yaml:",omitempty"`
+	Resources map[TypeName][]Resource `json:",omitempty" yaml:",omitempty"`
+	Relations map[TypeName][]Relation `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceQueryRange struct {
@@ -41,8 +41,8 @@ type ResourceQueryRange struct {
 }
 
 type ResourceQueryRangeResponse struct {
-	Resources map[SchemaName][]HistoricalResource `json:",omitempty" yaml:",omitempty"`
-	Relations map[SchemaName][]HistoricalRelation `json:",omitempty" yaml:",omitempty"`
+	Resources map[TypeName][]HistoricalResource `json:",omitempty" yaml:",omitempty"`
+	Relations map[TypeName][]HistoricalRelation `json:",omitempty" yaml:",omitempty"`
 }
 
 // Request & Response Section End
@@ -51,17 +51,25 @@ type ResourceQueryRangeResponse struct {
 
 // Resource is an immutable representation of the entity producing telemetry.
 type Resource struct {
-	Type           SchemaName   // Related with resource's type, and the type connected with a specification.
+	Type           TypeName     // Related with resource's type, and the type connected with a specification.
 	Urn            string       // The Unique resource name of this resources, must be unique with whole scope.
-	SecondaryTypes []SchemaName // Additional type of resource, used for observability.
+	SecondaryTypes []TypeName   // Additional type of resource, used for observability.
 	Attributes     []*Attribute // Attributes of the resource, may be a required or optional.
 	States         *State       // State of the resource, name should be unique.
 }
 
+func (r Resource) String() string {
+	return r.Urn
+}
+
+func (r Resource) TypeName() TypeName {
+	return r.Type
+}
+
 type HistoricalResource struct {
-	Type           SchemaName   // Related with resource's type, and the type connected with a specification.
-	Urn            string       // The Unique resource name of this resources, must be unique with whole scope.
-	SecondaryTypes []SchemaName // Additional type of resource, used for observability.
+	Type           TypeName   // Related with resource's type, and the type connected with a specification.
+	Urn            string     // The Unique resource name of this resources, must be unique with whole scope.
+	SecondaryTypes []TypeName // Additional type of resource, used for observability.
 
 	Attributes []*HistoricalAttribute // Attributes of the resource, may be a required or optional.
 	State      *HistoricalState       // State of the resource, name should be unique.

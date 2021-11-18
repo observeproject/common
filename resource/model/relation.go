@@ -7,12 +7,7 @@ import (
 )
 
 type RelationName struct {
-	Name           promModel.LabelName
-	Source, Target SchemaName
-}
-
-func (r RelationName) String() string {
-	return fmt.Sprintf("%s_%s_%s", r.Source, r.Name, r.Target)
+	Name, Source, Target TypeName
 }
 
 type RelationChangedRecord struct {
@@ -25,6 +20,14 @@ type Relation struct {
 	RelationName          `json:",inline" yaml:",inline"`
 	SourceUrn, TargetUrn  string
 	RelationChangedRecord `json:",inline" yaml:",inline"`
+}
+
+func (r Relation) String() string {
+	return fmt.Sprintf("%s{%s->%s}", r.Name, r.Source, r.Target)
+}
+
+func (r Relation) TypeName() TypeName {
+	return TypeName(r.String())
 }
 
 type HistoricalRelation struct {
