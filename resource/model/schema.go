@@ -5,7 +5,7 @@ import (
 )
 
 type ResourceSchema struct {
-	Name       SchemaName
+	Name       TypeName
 	Brief      string
 	Prefix     string
 	UrnPattern string // UrnPattern is a NamedRegex that can be used transform urn from attributes.
@@ -13,9 +13,9 @@ type ResourceSchema struct {
 }
 
 type AttributeSchema struct {
-	Name     promModel.LabelName
-	Brief    string
-	Type     string
+	Name     promModel.LabelName // id
+	Brief    string              // comment
+	Type     string              // string,int...
 	Required bool
 }
 
