@@ -9,7 +9,7 @@ type ResourceSchema struct {
 	Brief        string
 	Prefix       string
 	UrnPattern   string // UrnPattern is a NamedRegex that can be used transform urn from attributes.
-	ShortPattern string
+	ShortPattern string // ShortPattern is a short name pattern for represent
 	Attributes   []*AttributeSchema
 }
 
