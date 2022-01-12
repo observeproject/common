@@ -47,6 +47,7 @@ type StateQueryRange struct {
 type StateQueryRangeResponse struct {
 	Content map[string][]*HistoricalState
 }
+
 // Request & Response Section End
 
 // State is a Key-value struct for describe a status of the resource in some aspect. The value is enum value.
@@ -56,7 +57,8 @@ type State struct {
 }
 
 type StateRecord struct {
-	Since promModel.Time // The time of state value change to.
+	Since promModel.Time `json:",omitempty"` // The time of state value change to.
+	EndUp promModel.Time `json:",omitempty"` // The time of state value change to.
 	Value StateValue     // The value of the state, must be match StateValue.
 }
 
