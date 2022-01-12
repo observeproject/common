@@ -5,11 +5,12 @@ import (
 )
 
 type ResourceSchema struct {
-	Name       TypeName
-	Brief      string
-	Prefix     string
-	UrnPattern string // UrnPattern is a NamedRegex that can be used transform urn from attributes.
-	Attributes []*AttributeSchema
+	Name         TypeName
+	Brief        string
+	Prefix       string
+	UrnPattern   string // UrnPattern is a NamedRegex that can be used transform urn from attributes.
+	ShortPattern string
+	Attributes   []*AttributeSchema
 }
 
 type AttributeSchema struct {
