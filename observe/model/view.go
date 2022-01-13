@@ -70,8 +70,8 @@ type TreeViewStyle struct {
 }
 
 type TreeViewItem struct {
-	Matcher      resModel.ResourceMatcher
-	Relations    []*resModel.RelationName
-	Children     []*TreeViewItem
-	ShortPattern string
+	Matcher     resModel.ResourceMatcher
+	Relations   []*resModel.RelationName
+	Children    []*TreeViewItem
+	ShowPattern string
 }
