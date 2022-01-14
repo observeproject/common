@@ -51,11 +51,11 @@ type ResourceQueryRangeResponse struct {
 
 // Resource is an immutable representation of the entity producing telemetry.
 type Resource struct {
-	Type           TypeName     // Related with resource's type, and the type connected with a specification.
-	Urn            string       // The Unique resource name of this resources, must be unique with whole scope.
-	SecondaryTypes []TypeName   // Additional type of resource, used for observability.
-	Attributes     []*Attribute // Attributes of the resource, may be a required or optional.
-	States         *State       // State of the resource, name should be unique.
+	Type         TypeName     `json:",omitempty"` // Related with resource's type, and the type connected with a specification.
+	Urn          string       `json:",omitempty"` // The Unique resource name of this resources, must be unique with whole scope.
+	ObserveTypes []TypeName   `json:",omitempty"` // Additional type of resource, used for observability.
+	Attributes   []*Attribute `json:",omitempty"` // Attributes of the resource, may be a required or optional.
+	States       *State       `json:",omitempty"` // State of the resource, name should be unique.
 }
 
 func (r Resource) String() string {
@@ -67,12 +67,12 @@ func (r Resource) TypeName() TypeName {
 }
 
 type HistoricalResource struct {
-	Type           TypeName   // Related with resource's type, and the type connected with a specification.
-	Urn            string     // The Unique resource name of this resources, must be unique with whole scope.
-	SecondaryTypes []TypeName // Additional type of resource, used for observability.
+	Type         TypeName   `json:",omitempty"` // Related with resource's type, and the type connected with a specification.
+	Urn          string     `json:",omitempty"` // The Unique resource name of this resources, must be unique with whole scope.
+	ObserveTypes []TypeName `json:",omitempty"` // Additional type of resource, used for observability.
 
-	Attributes []*HistoricalAttribute // Attributes of the resource, may be a required or optional.
-	State      *HistoricalState       // State of the resource, name should be unique.
+	Attributes []*HistoricalAttribute `json:",omitempty"` // Attributes of the resource, may be a required or optional.
+	State      *HistoricalState       `json:",omitempty"` // State of the resource, name should be unique.
 }
 
 // Attribute is a Key-value struct for describe a property of the resource, and can be used for resources selection.
@@ -83,13 +83,13 @@ type Attribute struct {
 }
 
 type HistoricalAttribute struct {
-	Name    promModel.LabelName
-	Records []*StringRecord
+	Name    promModel.LabelName `json:",omitempty"`
+	Records []*StringRecord     `json:",omitempty"`
 }
 
 type StringRecord struct {
-	Since promModel.Time       // The time of the value change to.
-	EndUp promModel.Time       // The time of relation finished.
+	Since promModel.Time       `json:",omitempty"` // The time of the value change to.
+	EndUp promModel.Time       `json:",omitempty"` // The time of relation finished.
 	Value promModel.LabelValue // The value, cannot be null or empty.
 }
 
