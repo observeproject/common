@@ -9,15 +9,15 @@ import (
 
 // ResourceQuery is the instant query Params
 type ResourceQuery struct {
-	Time      promModel.Time `json:",omitempty"`
-	Selectors []*ResourceSelector
+	Time      promModel.Time
+	Selectors []*ResourceSelector `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceSelector struct {
 	// SourceMatcher Start point of resource searching, required.
-	SourceMatcher ResourceMatcher `json:",omitempty" yaml:",omitempty"`
+	SourceMatcher *ResourceMatcher `json:",omitempty" yaml:",omitempty"`
 	// TargetMatcher Endpoint of resource searching, required.
-	TargetMatcher ResourceMatcher `json:",omitempty" yaml:",omitempty"`
+	TargetMatcher *ResourceMatcher `json:",omitempty" yaml:",omitempty"`
 	// ShowState return the resource with global state.
 	ShowState bool
 	// Relations return more resources that match the relation of Matcher, optional.
@@ -37,7 +37,7 @@ type ResourceQueryResponse struct {
 type ResourceQueryRange struct {
 	Start     promModel.Time
 	End       promModel.Time
-	Selectors []*ResourceSelector
+	Selectors []*ResourceSelector `json:",omitempty" yaml:",omitempty"`
 }
 
 type ResourceQueryRangeResponse struct {
